@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using SAHB.GraphQLClient.Executor;
 using SAHB.GraphQLClient.Extentions;
 using SAHB.GraphQLClient.FieldBuilder.Attributes;
+using SAHB.GraphQLClient.Introspection;
 using SAHB.GraphQLClient.QueryGenerator;
 
 namespace SAHB.GraphQLClient.Examples
@@ -96,6 +97,11 @@ namespace SAHB.GraphQLClient.Examples
             var filmResponse = await client.Query<FilmQuery>("https://swapi.apis.guru/",
                 arguments: new GraphQLQueryArgument("filmIdVariable", "6"));
             Console.WriteLine(filmResponse.Film.Title);
+
+            // Get introspection
+            var introspectionResponse =
+                await client.Query<GraphQLIntrospectionQuery>("https://mpjk0plp9.lp.gql.zone/graphql");
+            Console.WriteLine(introspectionResponse.Schema.QueryType.Name);
 
             Console.ReadKey();
         }
