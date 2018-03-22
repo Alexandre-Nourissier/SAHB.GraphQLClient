@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using SAHB.GraphQLClient.Result;
 
@@ -8,6 +9,7 @@ namespace SAHB.GraphQLClient.Executor
     /// <summary>
     /// GraphQL executor which executes a query against a http GraphQL server
     /// </summary>
+    [Obsolete]
     public interface IGraphQLHttpExecutor
     {
         /// <summary>

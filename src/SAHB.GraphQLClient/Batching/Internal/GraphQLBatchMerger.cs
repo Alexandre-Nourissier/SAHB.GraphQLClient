@@ -15,11 +15,7 @@ namespace SAHB.GraphQLClient.Batching.Internal
     // ReSharper disable once InconsistentNaming
     internal class GraphQLBatchMerger
     {
-        private readonly string _url;
-        private readonly HttpMethod _httpMethod;
-        private readonly string _authorizationToken;
-        private readonly string _authorizationMethod;
-        private readonly IGraphQLHttpExecutor _executor;
+        private readonly IGraphQLExecutor _executor;
         private readonly IGraphQLFieldBuilder _fieldBuilder;
         private readonly IGraphQLQueryGeneratorFromFields _queryGenerator;
         private readonly IDictionary<string, IEnumerable<GraphQLFieldWithOverridedAlias>> _fields;
@@ -29,12 +25,8 @@ namespace SAHB.GraphQLClient.Batching.Internal
         private GraphQLDataResult<JObject> _result;
         private string _executedQuery;
 
-        public GraphQLBatchMerger(string url, HttpMethod httpMethod, string authorizationToken, string authorizationMethod, IGraphQLHttpExecutor executor, IGraphQLFieldBuilder fieldBuilder, IGraphQLQueryGeneratorFromFields queryGenerator)
+        public GraphQLBatchMerger(IGraphQLExecutor executor, IGraphQLFieldBuilder fieldBuilder, IGraphQLQueryGeneratorFromFields queryGenerator)
         {
-            _url = url;
-            _httpMethod = httpMethod;
-            _authorizationToken = authorizationToken;
-            _authorizationMethod = authorizationMethod;
             _executor = executor;
             _fieldBuilder = fieldBuilder;
             _queryGenerator = queryGenerator;
@@ -106,7 +98,7 @@ namespace SAHB.GraphQLClient.Batching.Internal
 
             // Execute query
             _result =
-                await _executor.ExecuteQuery<JObject>(_executedQuery, _url, _httpMethod, _authorizationToken, _authorizationMethod).ConfigureAwait(false);
+                await _executor.ExecuteQuery<JObject>(_executedQuery).ConfigureAwait(false);
         }
 
         private void UpdateAlias()

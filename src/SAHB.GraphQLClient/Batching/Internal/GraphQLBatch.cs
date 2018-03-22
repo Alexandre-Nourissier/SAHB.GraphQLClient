@@ -12,9 +12,9 @@ namespace SAHB.GraphQLClient.Batching.Internal
     {
         private readonly GraphQLBatchMerger _batch;
 
-        internal GraphQLBatch(string url, HttpMethod httpMethod, string authorizationToken, string authorizationMethod, IGraphQLHttpExecutor executor, IGraphQLFieldBuilder fieldBuilder, IGraphQLQueryGeneratorFromFields queryGenerator)
+        internal GraphQLBatch(IGraphQLExecutor executor, IGraphQLFieldBuilder fieldBuilder, IGraphQLQueryGeneratorFromFields queryGenerator)
         {
-            _batch = new GraphQLBatchMerger(url, httpMethod, authorizationToken, authorizationMethod, executor, fieldBuilder, queryGenerator);
+            _batch = new GraphQLBatchMerger(executor, fieldBuilder, queryGenerator);
         }
 
         /// <inheritdoc />
